@@ -47,6 +47,11 @@ Contributions are always welcome!
 Keep it clean and focused on improvements instead of new features.
 
 
+## Thanks!
+
+This project was inspired by [@dev-worm](https://www.youtube.com/watch?v=vZHzMO90IwQ) youtube tutorial on how to create FSM in Godot 4.3 using LimboAI.
+
+A huge thank you to [jumpbutton](https://jumpbutton.itch.io/girlknightasset) to create this awesome 2D animated character with LOTS of animations!
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
