@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://cm7g0olh4sgj7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ethyv"]
+size = Vector2(32, 320)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s3eou"]
+size = Vector2(32, 192)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2dt5j"]
+size = Vector2(224, 32)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_iuhxx"]
+distance = -13.0
+
+[node name="Environment" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(560, 416)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_ethyv")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D/CollisionShape2D"]
+offset_left = -16.0
+offset_top = -160.0
+offset_right = 16.0
+offset_bottom = 160.0
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(628, 256)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+shape = SubResource("RectangleShape2D_s3eou")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D2/CollisionShape2D"]
+offset_left = -16.0
+offset_top = -96.0
+offset_right = 16.0
+offset_bottom = 96.0
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(717, 505)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2(99, -41)
+shape = SubResource("RectangleShape2D_2dt5j")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D4/CollisionShape2D"]
+offset_left = -112.0
+offset_top = -16.0
+offset_right = 112.0
+offset_bottom = 16.0
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2(1056, 320)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5"]
+position = Vector2(80, -48)
+shape = SubResource("RectangleShape2D_2dt5j")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D5/CollisionShape2D"]
+offset_left = -112.0
+offset_top = -16.0
+offset_right = 112.0
+offset_bottom = 16.0
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="."]
+position = Vector2(832, 659)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6"]
+position = Vector2(80, -48)
+shape = SubResource("RectangleShape2D_2dt5j")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D6/CollisionShape2D"]
+offset_left = -112.0
+offset_top = -16.0
+offset_right = 112.0
+offset_bottom = 16.0
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(670, 659)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+shape = SubResource("WorldBoundaryShape2D_iuhxx")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D3"]
+offset_left = -670.0
+offset_top = 13.0
+offset_right = 610.0
+offset_bottom = 77.0

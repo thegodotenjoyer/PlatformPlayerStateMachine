@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=3 uid="uid://7mdqa3kg3sja"]
+
+[ext_resource type="PackedScene" uid="uid://du438g0rr8bb7" path="res://scenes/KnightPlayer.tscn" id="1_babqt"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_f2fsh"]
+[ext_resource type="PackedScene" uid="uid://b18jb4s0xqgv" path="res://scenes/EnemyDummy.tscn" id="2_kirhs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_34dqy"]
+size = Vector2(48, 198)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2img"]
+size = Vector2(108, 134)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u7duf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhbw7"]
+size = Vector2(142, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm78l"]
+size = Vector2(22, 218)
+
+[node name="Game" type="Node2D"]
+position = Vector2(647, 34)
+script = ExtResource("1_f2fsh")
+
+[node name="CentralWall01" type="StaticBody2D" parent="."]
+position = Vector2(4, 415)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CentralWall01"]
+shape = SubResource("RectangleShape2D_34dqy")
+
+[node name="CentralWall02" type="StaticBody2D" parent="."]
+position = Vector2(4, 415)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CentralWall02"]
+position = Vector2(0, -243)
+shape = SubResource("RectangleShape2D_e2img")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(633, 660)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape2D_u7duf")
+
+[node name="KnightPlayer" parent="." instance=ExtResource("1_babqt")]
+
+[node name="Stair" type="Node2D" parent="."]
+
+[node name="Stair01" type="StaticBody2D" parent="Stair"]
+position = Vector2(245, 635)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair01"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="Stair02" type="StaticBody2D" parent="Stair"]
+position = Vector2(482, 602)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair02"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="Stair03" type="StaticBody2D" parent="Stair"]
+position = Vector2(212, 526)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair03"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="Stair04" type="StaticBody2D" parent="Stair"]
+position = Vector2(480, 461)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair04"]
+shape = SubResource("RectangleShape2D_fm78l")
+
+[node name="Stair05" type="StaticBody2D" parent="Stair"]
+position = Vector2(208, 392)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair05"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="Stair06" type="StaticBody2D" parent="Stair"]
+position = Vector2(441, 304)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair06"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="Stair07" type="StaticBody2D" parent="Stair"]
+position = Vector2(-406, 592)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair07"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="Stair08" type="StaticBody2D" parent="Stair"]
+position = Vector2(-616, 590)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Stair/Stair08"]
+shape = SubResource("RectangleShape2D_qhbw7")
+
+[node name="EnemyDummy" parent="." instance=ExtResource("2_kirhs")]
+position = Vector2(-531, 508)
+damage = 25
+
+[node name="LethalEnemyDummy" parent="." instance=ExtResource("2_kirhs")]
+position = Vector2(468, 222)
+enemy_name = "LEHTAL"
+damage = 100
+
+[node name="KnightPlayerHealth" type="Label" parent="."]
+offset_left = -622.0
+offset_top = -13.0
+offset_right = -582.0
+offset_bottom = 10.0
+text = "100	"
+horizontal_alignment = 1
+vertical_alignment = 1

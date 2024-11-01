@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://7mdqa3kg3sja"]
+
+[ext_resource type="PackedScene" uid="uid://du438g0rr8bb7" path="res://scenes/KnightPlayer.tscn" id="1_babqt"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_f2fsh"]
+[ext_resource type="PackedScene" uid="uid://b18jb4s0xqgv" path="res://scenes/EnemyDummy.tscn" id="2_kirhs"]
+[ext_resource type="FontFile" uid="uid://g2oormg8mgtd" path="res://assets/fonts/m5x7.ttf" id="4_dvw03"]
+[ext_resource type="PackedScene" uid="uid://cm7g0olh4sgj7" path="res://scenes/Environment.tscn" id="4_qbt42"]
+
+[node name="Game" type="Node2D"]
+position = Vector2(647, 34)
+script = ExtResource("1_f2fsh")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="KnightPlayerHealth" type="Label" parent="HUD"]
+offset_left = 25.0
+offset_top = 21.0
+offset_right = 65.0
+offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("4_dvw03")
+theme_override_font_sizes/font_size = 32
+text = "Health: 100	"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HowTo" type="Label" parent="HUD"]
+offset_left = 26.0
+offset_top = 87.0
+offset_right = 388.0
+offset_bottom = 480.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_dvw03")
+theme_override_font_sizes/font_size = 24
+text = "A and D to MOVE
+S to CROUCH
+S + A or D to CROUCH_MOVE
+Shift + A or D to DASH
+Spacebar to JUMP
+Spacebar + Spacebar to DOUBLE_JUMP
+Spacebar + MouseLeft to ATTACK
+Spacebar + Shift to DASH
+MouseLeft to ATTACK
+MouseRight hold to SHIELD_BLOCK
+MouseRight hold + MouseLeft to SHIELD_BASH
+MouseRight hold + Shift to ATTACK
+A or D near wall to WALL_SLIDE
+S on WALL_SLIDE to slide faster
+Spacebar on WALL_SLIDE to JUMP
+On hit goes to HURT state
+On health less or equal to 0 DIE state
+Fall speed may trigger LANDING state"
+
+[node name="HowTo" type="Label" parent="HUD/HowTo"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -31.0
+offset_right = 267.0
+offset_bottom = -5.0
+theme_override_colors/font_color = Color(0.180024, 0.793722, 0.619636, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("4_dvw03")
+theme_override_font_sizes/font_size = 32
+text = "PLATFORM STATE MACHINE"
+
+[node name="Button" type="Button" parent="HUD"]
+offset_left = 1141.0
+offset_top = 25.0
+offset_right = 1255.0
+offset_bottom = 56.0
+text = "Restart Game"
+
+[node name="KnightPlayer" parent="." instance=ExtResource("1_babqt")]
+z_index = 1
+
+[node name="EnemyDummy" parent="." instance=ExtResource("2_kirhs")]
+position = Vector2(-584, 571)
+can_shoot = true
+damage = 25
+
+[node name="LethalEnemyDummy" parent="." instance=ExtResource("2_kirhs")]
+position = Vector2(541, 166)
+enemy_name = "LETHAL"
+damage = 100
+
+[node name="Environment" parent="." instance=ExtResource("4_qbt42")]
+position = Vector2(-647, -34)
+
+[connection signal="pressed" from="HUD/Button" to="." method="_on_button_pressed"]

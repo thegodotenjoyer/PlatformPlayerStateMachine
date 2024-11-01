@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmla32hfebmqp"]
+
+[sub_resource type="GDScript" id="GDScript_le4it"]
+script/source = "extends Node2D
+
+func _ready() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/Game.tscn\")
+"
+
+[node name="Dummy" type="Node2D"]
+script = SubResource("GDScript_le4it")
