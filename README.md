@@ -4,6 +4,7 @@
 A fully functional Godot player character using LimboAI to configure a state machine.
 
 This template was built using [Godot build 4.3](https://godotengine.org/download).
+Check my [itch.io page](https://the-godot-enjoyer.itch.io/platform-player-state-machine) for screenshots and zip file.
 
 
 ## Installation
