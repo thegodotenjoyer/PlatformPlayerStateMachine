@@ -26,6 +26,8 @@ const FALL_STAGE_Y := 100.0
 const HURT_DURATION_RATE := 0.5
 const JUMP_SPEED_Y := -400.0
 const LANDING_DELAY_RATE := 0.25
+const ROLL_DELAY_RATE := 0.25
+const ROLL_SPEED_X := 600
 const LANDING_THRESHOLD_Y := 450.0
 const MAX_TOTAL_JUMPS := 2
 const SHIELD_BASH_DELAY_RATE := 0.25
@@ -43,6 +45,7 @@ var dash_charges := 0
 var dash_recharge := DASH_RECHARGE_RATE
 var hurt_duration := HURT_DURATION_RATE
 var landing_duration := LANDING_DELAY_RATE
+var roll_duration := ROLL_DELAY_RATE
 var shield_bash_duration := SHIELD_BASH_DELAY_RATE
 var shield_block_duration := SHIELD_BLOCK_DURATION_RATE
 var speed_X := WALK_SPEED_X
@@ -93,6 +96,7 @@ func _define_state_machine() -> void:
 	var jump_state := LimboState.new().named("jump").call_on_enter(_jump_start).call_on_update(_jump_update)
 	var jump_attack_state := LimboState.new().named("jump_attack").call_on_enter(_jump_attack_start).call_on_update(_jump_attack_update).call_on_exit(_jump_attack_exit)
 	var landing_state := LimboState.new().named("landing").call_on_enter(_landing_start).call_on_update(_landing_update)
+	var roll_state := LimboState.new().named("roll").call_on_enter(_roll_start).call_on_update(_roll_update).call_on_exit(_roll_exit)
 	var shield_bash_state := LimboState.new().named("shield_bash").call_on_enter(_shield_bash_start).call_on_update(_shield_bash_update).call_on_exit(_shield_bash_exit)
 	var shield_block_state := LimboState.new().named("shield_block").call_on_enter(_shield_block_start).call_on_update(_shield_block_update).call_on_exit(_shield_block_exit)
 	var shield_block_ready_state := LimboState.new().named("shield_block_ready").call_on_enter(_shield_block_ready_start).call_on_update(_shield_block_ready_update).call_on_exit(_shield_block_ready_exit)
@@ -115,6 +119,7 @@ func _define_state_machine() -> void:
 	main_sm.add_child(jump_state)
 	main_sm.add_child(jump_attack_state)
 	main_sm.add_child(landing_state)
+	main_sm.add_child(roll_state)
 	main_sm.add_child(shield_bash_state)
 	main_sm.add_child(shield_block_state)
 	main_sm.add_child(shield_block_ready_state)
@@ -170,7 +175,13 @@ func _define_state_machine() -> void:
 	main_sm.add_transition(jump_attack_state, fall_state, "to_fall")
 	main_sm.add_transition(jump_attack_state, landing_state, "to_landing")
 	
-	# hield_bash
+	# landing
+	main_sm.add_transition(landing_state, roll_state, "to_roll")
+	
+	# roll
+	main_sm.add_transition(roll_state, jump_state, "to_jump")
+	
+	# shield_bash
 	main_sm.add_transition(shield_bash_state, shield_block_state, "to_shield_block")
 	
 	# shield_block
@@ -441,7 +452,29 @@ func _landing_update(delta: float) -> void:
 	if landing_duration <= 0.0:
 		landing_duration = LANDING_DELAY_RATE
 		
+	if Input.is_action_pressed("left") or Input.is_action_pressed("right"):
+		main_sm.dispatch("to_roll")
+	else:
 		main_sm.dispatch("state_ended")
+
+func _roll_start() -> void:
+	animated_sprite.play("roll")
+	speed_X = ROLL_SPEED_X
+
+func _roll_update(delta: float) -> void:
+	_process_velocity()
+	_process_gravity(delta)
+	roll_duration -= delta
+	
+	if roll_duration <= 0 or (Input.is_action_just_released("left") or Input.is_action_just_released("right")):
+		roll_duration = ROLL_DELAY_RATE
+		main_sm.dispatch("state_ended")
+	elif Input.is_action_pressed("jump"):
+		main_sm.dispatch("to_jump")
+
+func _roll_exit() -> void:
+	speed_X = WALK_SPEED_X
+	roll_duration = ROLL_DELAY_RATE
 
 func _shield_bash_start() -> void:
 	animated_sprite.play("shield_bash")
@@ -452,7 +485,6 @@ func _shield_bash_update(delta: float) -> void:
 	_process_velocity()
 	shield_bash_duration -= delta
 	
-	# TODO: change to position
 	if animated_sprite.flip_h:
 		velocity.x = lerp(0.0, velocity.x + BASH_SPEED_X * -1, 0.50)
 	else:
@@ -703,4 +735,4 @@ func _debug_state() -> void:
 	
 	if current_state.text != state_name:
 		current_state.text = state_name
-		#print(current_state.text)
+		print(current_state.text)

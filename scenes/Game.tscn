@@ -51,7 +51,8 @@ S on WALL_SLIDE to slide faster
 Spacebar on WALL_SLIDE to JUMP
 On hit goes to HURT state
 On health less or equal to 0 DIE state
-Fall speed may trigger LANDING state"
+Fall speed may trigger LANDING state
+A or D on LANDING state to ROLL"
 
 [node name="HowTo" type="Label" parent="HUD/HowTo"]
 layout_mode = 0
